@@ -35,10 +35,34 @@ function closeModal(evt) {
     originalImagesElem.removeAttribute("src");
   }
 }
+function KeyPress(evt) {
+  if (evt.key === "Escape") {
+    modalElem.classList.remove("is-open");
+    originalImagesElem.removeAttribute("src");
+  }
+  const arrayOrgUrl = galleryListObj.map((orgUrl) => orgUrl.original);
 
+  if (evt.key === "ArrowRight") {
+    let i = arrayOrgUrl.indexOf(originalImagesElem.src);
+    i++;
+    if (i >= 9) {
+      i = 0;
+    }
+    originalImagesElem.setAttribute("src", arrayOrgUrl[i]);
+  }
+  if (evt.key === "ArrowLeft") {
+    let i = arrayOrgUrl.indexOf(originalImagesElem.src);
+    i--;
+    if (i < 0) {
+      i = 8;
+    }
+    originalImagesElem.setAttribute("src", arrayOrgUrl[i]);
+  }
+}
 galleryListElem.insertAdjacentHTML(
   "afterbegin",
   createListGallery(galleryListObj)
 );
 galleryListElem.addEventListener("click", getUrl);
 modalElem.addEventListener("click", closeModal);
+window.addEventListener("keydown", KeyPress);
